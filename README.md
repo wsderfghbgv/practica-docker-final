@@ -48,33 +48,51 @@ Orden de arranque: **db** (con `healthcheck` hasta que Postgres acepte conexione
    ```bash
    cp .env.example .env
    ```
+   <img width="870" height="108" alt="image" src="https://github.com/user-attachments/assets/96cd6df9-ae4a-46d3-8135-a25ef6d6db97" />
+
+
+
+
+
+
 
    Edita `.env` y unifica al menos: `POSTGRES_PASSWORD`, `DB_PASSWORD` (mismo valor) y `JWT_SECRET`.
 
-2. **Permisos de los scripts** (Linux/macOS)
+1. **Permisos de los scripts** (Linux/macOS)
 
    ```bash
    chmod +x start.sh stop.sh
    ```
+   <img width="842" height="277" alt="image" src="https://github.com/user-attachments/assets/b94add44-f746-4094-9f97-910f36f06278" />
 
-3. **Levantar el stack**
+   <img width="842" height="277" alt="image" src="https://github.com/user-attachments/assets/0c818e99-2c38-4820-9914-1be7ca0f912b" />
+
+
+
+2. **Levantar el stack**
 
    ```bash
    ./start.sh
    ```
+      <img width="842" height="277" alt="image" src="https://github.com/user-attachments/assets/b94add44-f746-4094-9f97-910f36f06278" />
+   
 
    O directamente:
 
    ```bash
    docker compose up --build -d
    ```
+   <img width="842" height="277" alt="image" src="https://github.com/user-attachments/assets/aafb348b-4eca-4ef2-bdd6-d62ee9eabf74" />
 
-4. **Poblar datos de prueba** (primera vez)
+
+3. **Poblar datos de prueba** (primera vez)
 
    - Navegador: `http://localhost:3000/api/seed` (ajusta el host/puerto si cambiaste `BACKEND_PUBLISH_PORT`).
    - O: `curl http://localhost:3000/api/seed`
+   - <img width="842" height="277" alt="image" src="https://github.com/user-attachments/assets/70c31f67-ae8e-4c25-b7b1-28c43eb36a1f" />
 
-5. **Probar la aplicación**
+
+4. **Probar la aplicación**
 
    | Recurso | URL típica |
    | --- | --- |
@@ -82,24 +100,36 @@ Orden de arranque: **db** (con `healthcheck` hasta que Postgres acepte conexione
    | API | `http://localhost:3000/api` |
    | Swagger | Documentación expuesta bajo el prefijo global `api` del backend |
 
+   <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/5cdd290c-20c0-4493-b6c4-d9d1ced41a3c" />
+
+   <img width="842" height="277" alt="image" src="https://github.com/user-attachments/assets/70c31f67-ae8e-4c25-b7b1-28c43eb36a1f" />
+
+
 6. **Ver logs**
 
    ```bash
    docker compose logs -f
+   <img width="922" height="209" alt="image" src="https://github.com/user-attachments/assets/2629f9d5-e9c2-4cba-9759-83b112e13727" />
+
    docker compose logs -f backend
    ```
+   <img width="922" height="209" alt="image" src="https://github.com/user-attachments/assets/6fdda40c-48c2-4b97-8287-8c14d2bf8b4d" />
+
 
 7. **Detener**
 
    ```bash
    ./stop.sh
    ```
+    <img width="842" height="277" alt="image" src="https://github.com/user-attachments/assets/0c818e99-2c38-4820-9914-1be7ca0f912b" />
 
    Datos de Postgres se conservan en el volumen `postgres-data`. Para borrar también la base:
 
    ```bash
    docker compose down -v
    ```
+   <img width="922" height="209" alt="image" src="https://github.com/user-attachments/assets/2c18f3a9-55d4-48fe-a7b5-af7b30ac2257" />
+
 
 ## Servicios en `docker-compose.yml`
 
@@ -109,56 +139,6 @@ Orden de arranque: **db** (con `healthcheck` hasta que Postgres acepte conexione
 | **backend** | `./teslo-shop` (etapa `${STAGE}`) | API NestJS; en `dev` se monta el código y un volumen anónimo en `/app/node_modules` |
 | **frontend** | `./angular-tesloshop` | Nginx sirve el build estático y proxifica `/api` y `/socket.io` |
 
-## Build manual de imágenes (práctica)
 
-Desde la raíz del repo:
-
-```bash
-docker build -t teslo-backend ./teslo-shop --target dev
-docker build -t teslo-frontend ./angular-tesloshop
-```
-
-## Evidencias (entrega — capturas tuyas)
-
-El repositorio incluye la **configuración y la guía**; las **evidencias en imagen** las debes **generar tú** al validar el sistema en tu equipo (Docker no puede ejecutarse desde este entorno de desarrollo).
-
-Checklist alineado con la práctica (Fases 2–4):
-
-| # | Qué demuestra | Cómo obtenerla |
-| --- | --- | --- |
-| 1 | Imágenes construidas (Fase 2) | Terminal tras `docker build ...` o salida de `docker compose build` sin error |
-| 2 | Orquestación activa (Fase 3) | `docker compose ps`: tres servicios **Up**; **db** en estado **healthy** |
-| 3 | Comunicación FE ↔ API | Navegador en `http://localhost` (o tu `FRONTEND_PUBLISH_PORT`) con la tienda cargada |
-| 4 | API y datos de prueba | Captura de `http://localhost:3000/api/seed` mostrando `"SEED EXECUTED"` o salida de `curl` equivalente |
-| 5 | (Opcional) API / Swagger | Pantalla de la documentación Swagger del backend si la usas para probar endpoints |
-
-Guarda las capturas en una carpeta que indique tu institución (por ejemplo `evidencias/` o el anexo del informe) y súbelas con el informe o el repositorio si tu docente lo pide.
-
-### Capturas de evidencia
-
-Pega aquí las capturas correspondientes (reemplaza los archivos por los que generes en tu equipo):
-
-#### 1. Imágenes construidas (Fase 2)
-![Imágenes construidas - Fase 2](evidencias/01-build.png)
-
-#### 2. Orquestación activa (Fase 3)
-![docker compose ps - Fase 3](evidencias/02-ps.png)
-
-#### 3. Comunicación FE ↔ API (Frontend cargado)
-![Frontend cargado](evidencias/03-frontend.png)
-
-#### 4. API y datos de prueba (Seed ejecutado)
-![Seed ejecutado](evidencias/04-seed.png)
-
-#### 5. Swagger (opcional)
-![Swagger](evidencias/05-swagger.png)
-
-## Resolución de problemas breve
-
-- **Backend reiniciando**: revisar credenciales `DB_*` vs `POSTGRES_*` y logs `docker compose logs backend`.
-- **Puerto en uso**: cambiar `FRONTEND_PUBLISH_PORT`, `BACKEND_PUBLISH_PORT` o `POSTGRES_PUBLISH_PORT` en `.env` y `docker compose down` + `docker compose up -d`.
-- **`docker-compose` vs `docker compose`**: en sistemas recientes usa `docker compose` (plugin). Los scripts intentan ambos.
-
----
 
 GFPI-F-135 V04 — Laboratorio práctica final: contenerización end-to-end.
