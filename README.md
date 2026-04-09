@@ -139,6 +139,9 @@ Orden de arranque: **db** (con `healthcheck` hasta que Postgres acepte conexione
 | **backend** | `./teslo-shop` (etapa `${STAGE}`) | API NestJS; en `dev` se monta el código y un volumen anónimo en `/app/node_modules` |
 | **frontend** | `./angular-tesloshop` | Nginx sirve el build estático y proxifica `/api` y `/socket.io` |
 
+<img width="904" height="695" alt="image" src="https://github.com/user-attachments/assets/b3f46259-bbcb-4910-8045-74da8dee8ac2" />
+
+
 
 
 GFPI-F-135 V04 — Laboratorio práctica final: contenerización end-to-end.
